@@ -1,13 +1,20 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import 'colors';
 import { ApolloServer } from 'apollo-server-express';
 import { schema } from './schema';
+import { getPrismaClient } from './prisma';
+import { MyContext } from './interfaces';
 
 const main = async () => {
   const app = express();
 
   const apolloServer = new ApolloServer({
     schema: schema,
+    context: (req: Request, res: Response): MyContext => ({
+      req,
+      res,
+      prisma: getPrismaClient(),
+    }),
   });
 
   apolloServer.applyMiddleware({ app });
