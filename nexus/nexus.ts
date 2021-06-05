@@ -7,12 +7,7 @@
 
 
 
-declare global {
-  interface NexusGenCustomOutputProperties<TypeName extends string> {
-    model: NexusPrisma<TypeName, 'model'>
-    crud: any
-  }
-}
+
 
 declare global {
   interface NexusGen extends NexusGenTypes {}
@@ -34,6 +29,11 @@ export interface NexusGenScalars {
 
 export interface NexusGenObjects {
   Query: {};
+  Stack: { // root type
+    desc?: string | null; // String
+    id?: string | null; // ID
+    name?: string | null; // String
+  }
 }
 
 export interface NexusGenInterfaces {
@@ -49,11 +49,23 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 export interface NexusGenFieldTypes {
   Query: { // field return type
     name: string | null; // String
+    stacks: Array<NexusGenRootTypes['Stack'] | null> | null; // [Stack]
+  }
+  Stack: { // field return type
+    desc: string | null; // String
+    id: string | null; // ID
+    name: string | null; // String
   }
 }
 
 export interface NexusGenFieldTypeNames {
   Query: { // field return type name
+    name: 'String'
+    stacks: 'Stack'
+  }
+  Stack: { // field return type name
+    desc: 'String'
+    id: 'ID'
     name: 'String'
   }
 }
@@ -95,7 +107,6 @@ export interface NexusGenTypes {
   context: any;
   inputTypes: NexusGenInputs;
   rootTypes: NexusGenRootTypes;
-  inputTypeShapes: NexusGenInputs & NexusGenEnums & NexusGenScalars;
   argTypes: NexusGenArgTypes;
   fieldTypes: NexusGenFieldTypes;
   fieldTypeNames: NexusGenFieldTypeNames;

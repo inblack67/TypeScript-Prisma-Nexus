@@ -4,4 +4,13 @@
 
 type Query {
   name: String
+
+  """Get all Stacks"""
+  stacks: [Stack]
+}
+
+type Stack {
+  desc: String
+  id: ID
+  name: String
 }

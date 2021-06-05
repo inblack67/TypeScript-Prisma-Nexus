@@ -1,11 +1,29 @@
-import { nexusPrisma } from 'nexus-plugin-prisma';
-import { makeSchema, queryType } from 'nexus';
+import { makeSchema, queryType } from '@nexus/schema';
 import path from 'path';
+import { objectType } from 'nexus';
+import { MyContext } from 'src/interfaces';
+
+const Stack = objectType({
+  name: 'Stack',
+  definition(t) {
+    t.id('id');
+    t.string('name');
+    t.string('desc');
+  },
+});
 
 const query = queryType({
   definition(t) {
     t.string('name', {
       resolve: () => 'ryuk',
+    });
+    t.list.field('stacks', {
+      type: 'Stack',
+      description: 'Get all Stacks',
+      resolve: async (_, __, ctx: MyContext) => {
+        const stacks = await ctx.prisma.stack.findMany();
+        return stacks;
+      },
     });
   },
 });
@@ -13,8 +31,8 @@ const query = queryType({
 export const schema = makeSchema({
   types: {
     query,
+    Stack,
   },
-  plugins: [nexusPrisma()],
   outputs: {
     schema: path.join(process.cwd(), 'nexus/schema.graphql'),
     typegen: path.join(process.cwd(), 'nexus/nexus.ts'),
