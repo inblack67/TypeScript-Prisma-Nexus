@@ -1,6 +1,5 @@
-import { makeSchema, queryType } from '@nexus/schema';
+import { makeSchema, queryType, objectType } from '@nexus/schema';
 import path from 'path';
-import { objectType } from 'nexus';
 import { MyContext } from 'src/interfaces';
 
 const Stack = objectType({
@@ -25,6 +24,9 @@ const query = queryType({
         return stacks;
       },
     });
+    // t.field('createStack', {
+    //   type: 'Bool',
+    // });
   },
 });
 
