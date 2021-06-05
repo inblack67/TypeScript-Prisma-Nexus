@@ -1,6 +1,17 @@
 ### Nexus & Prisma
 
-- Integrating Prisma With Nexus In A Typical GraphQL API
+- GraphQL API with Nexus Schema and Prisma
+- Tech Stack
+  - TypeScript
+  - Node.js
+  - Express
+  - PostgreSQL
+  - GraphQL
+  - Apollo
+  - Nexus Schema
+  - Prisma
+
+### Notes
 
 ```sh
 npx prisma init
